@@ -1,5 +1,5 @@
 ---
-name: "\U0001F528[Refactor] - "
+name: "\U0001F528Refactor Template"
 about: refactor template
 title: "\U0001F528[Refactor]"
 labels: ''

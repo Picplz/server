@@ -1,5 +1,5 @@
 ---
-name: "\U0001F680 [Feat] - "
+name: "\U0001F680 Feature Template"
 about: feature template
 title: "\U0001F680 [Feat]"
 labels: ''
