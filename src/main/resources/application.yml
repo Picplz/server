@@ -1,0 +1,49 @@
+spring:
+  profiles:
+    active : dev
+    group:
+      local: local
+      prod: prod
+      dev: dev
+  application:
+    name: picplz
+
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+    web: debug
+    com: INFO
+    root: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  data:
+    mongodb:
+      uri: mongodb+srv://picplz:picplz@picplz-server.gmh3y.mongodb.net/picplzDB?retryWrites=true&w=majority&appName=picplz-server
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  data:
+    mongodb:
+      uri: mongodb+srv://picplz:picplz@picplz-server.gmh3y.mongodb.net/picplzDB?retryWrites=true&w=majority&appName=picplz-server
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
