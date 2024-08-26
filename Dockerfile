@@ -31,7 +31,7 @@ WORKDIR /picplz
 COPY --from=builder /app/build/libs/*.jar app.jar
 
 # Set the active Spring profile to 'local'
-#ENV SPRING_PROFILES_ACTIVE=dev
+ENV SPRING_PROFILES_ACTIVE=local
 
 # Expose port 8000 to the outside world
 EXPOSE 8000
