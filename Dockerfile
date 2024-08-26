@@ -34,7 +34,7 @@ COPY --from=builder /app/build/libs/*.jar app.jar
 ENV SPRING_PROFILES_ACTIVE=local
 
 # Expose port 8000 to the outside world
-EXPOSE 8000
+EXPOSE 8080
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "/picplz/app.jar"]
