@@ -1,4 +1,4 @@
-package com.hm.picplz.config;
+package com.hm.picplz.global.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;

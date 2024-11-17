@@ -1,4 +1,4 @@
-package com.hm.picplz.config.security;
+package com.hm.picplz.global.config.security;
 
 import java.util.ArrayList;
 import java.util.Collections;
