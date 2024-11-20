@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("ReservationNotification")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ReservationNotification {
@@ -29,6 +28,7 @@ public class ReservationNotification {
     @DBRef
     private Reservation reservation;
 
+    @Builder
     public ReservationNotification(ObjectId id, String title, String content, LocalDateTime sendTime, String type, LocalDateTime createdAt, Reservation reservation) {
         this.id = id;
         this.title = title;

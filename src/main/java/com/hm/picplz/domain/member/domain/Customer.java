@@ -14,7 +14,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("Customer")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Customer {
@@ -29,6 +28,7 @@ public class Customer {
     @DBRef
     private Member member;
 
+    @Builder
     public Customer(ObjectId id, String nickname, String profileImage, String area, String camera) {
         this.id = id;
         this.nickname = nickname;

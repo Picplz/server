@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("Reservation")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Reservation {
@@ -32,6 +31,7 @@ public class Reservation {
     @DBRef
     private Photographer photographer;
 
+    @Builder
     public Reservation(ObjectId id, int price, LocalDateTime reservationTime, String place, String camera, String photoType, int photoNumber, Customer customer, Photographer photographer) {
         this.id = id;
         this.price = price;

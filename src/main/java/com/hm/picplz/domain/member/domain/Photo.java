@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("Photo")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Photo {
@@ -24,6 +23,7 @@ public class Photo {
     @DBRef
     private Photographer photographer;
 
+    @Builder
     public Photo(ObjectId id, String image, Photographer photographer) {
         this.id = id;
         this.image = image;

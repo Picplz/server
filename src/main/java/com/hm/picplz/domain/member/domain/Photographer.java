@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("Photographer")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Photographer {
@@ -32,6 +31,7 @@ public class Photographer {
     @DBRef
     private Member member;
 
+    @Builder
     public Photographer(ObjectId id, String nickname, String profileImage, String area, Integer minPrice, Integer maxPrice, String camera, String workField, String introduction, Member member) {
         this.id = id;
         this.nickname = nickname;

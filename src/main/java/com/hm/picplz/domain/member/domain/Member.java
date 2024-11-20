@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("Member")
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Member {
@@ -31,6 +30,7 @@ public class Member {
     @DBRef
     private Photographer photographer;
 
+    @Builder
     public Member(ObjectId id, String name, Date birth, String kakaoEmail, String device, Boolean notificationYn) {
         this.id = id;
         this.name = name;
