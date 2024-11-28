@@ -1,9 +1,9 @@
 package com.hm.picplz.domain.photographer.domain;
 
 import com.hm.picplz.domain.member.domain.Member;
-import com.hm.picplz.domain.portfolio.domain.PortfolioPhoto;
 import com.hm.picplz.domain.product.domain.ShootProduct;
 import com.hm.picplz.domain.review.domain.Review;
+import com.hm.picplz.global.common.entity.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,12 +13,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,12 +26,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Photographer extends Member {
+public class Photographer extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "photographer_id", updatable = false)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @NotNull
     private String area;
@@ -61,11 +65,9 @@ public class Photographer extends Member {
     private List<Review> reviews = new ArrayList<>();
 
     @Builder
-    private Photographer(Long id, String area, int minPrice, int maxPrice, String camera,
-        String workField, String introduction, List<Hashtag> hashtags,
-        List<ShootProduct> shootProducts,
-        List<Review> reviews) {
+    private Photographer(Long id, Member member, String area, int minPrice, int maxPrice, String camera, String workField, String introduction, List<Hashtag> hashtags, List<ShootProduct> shootProducts, List<Review> reviews) {
         this.id = id;
+        this.member = member;
         this.area = area;
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;

@@ -1,5 +1,7 @@
 package com.hm.picplz.domain.member.domain;
 
+import com.hm.picplz.domain.customer.domain.Customer;
+import com.hm.picplz.domain.photographer.domain.Photographer;
 import com.hm.picplz.global.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
@@ -19,8 +23,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Member extends BaseEntity {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,8 +46,7 @@ public abstract class Member extends BaseEntity {
     private String profileImage;
 
     @Builder
-    protected Member(Long id, String name, String nickname, LocalDate birth, String kakaoEmail,
-        String profileImage) {
+    private Member(Long id, String name, String nickname, LocalDate birth, String kakaoEmail, String profileImage) {
         this.id = id;
         this.name = name;
         this.nickname = nickname;
