@@ -20,8 +20,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ShootProduct extends BaseEntity {
 
@@ -57,4 +55,20 @@ public class ShootProduct extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
+
+    @Builder
+    private ShootProduct(boolean editedYn, Long id, String name, String description, int shootPrice,
+        int shootDuration, int amount, int editPrice, String otherDetails,
+        Photographer photographer) {
+        this.editedYn = editedYn;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.shootPrice = shootPrice;
+        this.shootDuration = shootDuration;
+        this.amount = amount;
+        this.editPrice = editPrice;
+        this.otherDetails = otherDetails;
+        this.photographer = photographer;
+    }
 }

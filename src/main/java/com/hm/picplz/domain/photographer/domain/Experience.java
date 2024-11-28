@@ -18,8 +18,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Experience extends BaseEntity {
 
@@ -34,4 +32,11 @@ public class Experience extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photographer_id", nullable = false)
     private Photographer photographer;
+
+    @Builder
+    private Experience(Long id, String content, Photographer photographer) {
+        this.id = id;
+        this.content = content;
+        this.photographer = photographer;
+    }
 }

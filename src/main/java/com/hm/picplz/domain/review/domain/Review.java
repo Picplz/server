@@ -18,8 +18,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseEntity {
 
@@ -35,4 +33,12 @@ public class Review extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
+
+    @Builder
+    private Review(Long id, String content, Float starPoint, Photographer photographer) {
+        this.id = id;
+        this.content = content;
+        this.starPoint = starPoint;
+        this.photographer = photographer;
+    }
 }

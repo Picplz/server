@@ -18,8 +18,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Reservation extends BaseEntity {
 
@@ -45,4 +43,18 @@ public class Reservation extends BaseEntity {
     private String photoAmount;
 
     private String photoPurpose;    // enum
+
+    @Builder
+    private Reservation(Long id, int price, LocalDateTime reservationTime, String place,
+        String camera,
+        String photoType, String photoAmount, String photoPurpose) {
+        this.id = id;
+        this.price = price;
+        this.reservationTime = reservationTime;
+        this.place = place;
+        this.camera = camera;
+        this.photoType = photoType;
+        this.photoAmount = photoAmount;
+        this.photoPurpose = photoPurpose;
+    }
 }

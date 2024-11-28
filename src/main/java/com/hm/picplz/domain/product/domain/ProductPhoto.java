@@ -33,4 +33,11 @@ public class ProductPhoto extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
+
+    @Builder
+    private ProductPhoto(Long id, String imageData, Photographer photographer) {
+        this.id = id;
+        this.imageData = imageData;
+        this.photographer = photographer;
+    }
 }

@@ -25,8 +25,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Photographer extends Member {
 
@@ -53,15 +51,29 @@ public class Photographer extends Member {
 
     private String introduction;
 
-    @Builder.Default
     @OneToMany(mappedBy = "photographer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Hashtag> hashtags = new ArrayList<>();
 
-    @Builder.Default
     @OneToMany(mappedBy = "photographer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ShootProduct> shootProducts = new ArrayList<>();
 
-    @Builder.Default
     @OneToMany(mappedBy = "photographer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Review> reviews = new ArrayList<>();
+
+    @Builder
+    private Photographer(Long id, String area, int minPrice, int maxPrice, String camera,
+        String workField, String introduction, List<Hashtag> hashtags,
+        List<ShootProduct> shootProducts,
+        List<Review> reviews) {
+        this.id = id;
+        this.area = area;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
+        this.camera = camera;
+        this.workField = workField;
+        this.introduction = introduction;
+        this.hashtags = hashtags;
+        this.shootProducts = shootProducts;
+        this.reviews = reviews;
+    }
 }

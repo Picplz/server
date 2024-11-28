@@ -19,8 +19,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PortfolioPhoto extends BaseEntity {
 
@@ -41,4 +39,14 @@ public class PortfolioPhoto extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "photographer_id", nullable = false)
     private Photographer photographer;
+
+    @Builder
+    private PortfolioPhoto(Long id, String imageData, String location, LocalDateTime uploadDate,
+        Photographer photographer) {
+        this.id = id;
+        this.imageData = imageData;
+        this.location = location;
+        this.uploadDate = uploadDate;
+        this.photographer = photographer;
+    }
 }
