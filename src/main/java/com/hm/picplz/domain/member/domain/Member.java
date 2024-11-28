@@ -43,7 +43,7 @@ public abstract class Member extends BaseEntity {
     private String profileImage;
 
     @Builder
-    private Member(Long id, String name, String nickname, LocalDate birth, String kakaoEmail,
+    protected Member(Long id, String name, String nickname, LocalDate birth, String kakaoEmail,
         String profileImage) {
         this.id = id;
         this.name = name;
