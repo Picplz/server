@@ -47,22 +47,69 @@ spring:
   config:
     activate:
       on-profile: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://mysql-db:3306/picplz?autoReconnect=true&useUnicode=true&serverTimezone=Asia/Seoul"
+    username: picplz
+    password: picplz
+  jpa:
+    properties:
+      hibernate:
+        storage_engine: innodb
+        format_sql: true
+        use_sql_comments: true
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+    show_sql: true
+
   data:
-    mongodb:
-      uri: mongodb+srv://picplz:picplz@picplz-server.gmh3y.mongodb.net/picplzDB?retryWrites=true&w=majority&appName=picplz-server
+    redis:
+      host: redis
+      port: 6379
+      password: picplz
+
+  session:
+    store-type: redis
+
+  main:
+    lazy-initialization: true
 
 ---
 spring:
   config:
     activate:
       on-profile: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://mysql-db:3306/picplz?autoReconnect=true&useUnicode=true&serverTimezone=Asia/Seoul"
+    username: picplz
+    password: picplz
+  jpa:
+    properties:
+      hibernate:
+        storage_engine: innodb
+        format_sql: true
+        use_sql_comments: true
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+    show_sql: true
+
   data:
-    mongodb:
-      uri: mongodb+srv://picplz:picplz@picplz-server.gmh3y.mongodb.net/picplzDB?retryWrites=true&w=majority&appName=picplz-server
+    redis:
+      host: redis
+      port: 6379
+      password: picplz
+
+  session:
+    store-type: redis
+
+  main:
+    lazy-initialization: true
 
 ---
 spring:
   config:
     activate:
       on-profile: prod
-
