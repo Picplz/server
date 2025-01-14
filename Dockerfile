@@ -1,5 +1,5 @@
 # Step 1: Build the application
-FROM openjdk:17-jdk-alpine AS builder
+FROM openjdk:17-jdk-slim AS builder
 
 # Set the working directory inside the container
 WORKDIR /app

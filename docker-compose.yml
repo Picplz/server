@@ -2,13 +2,10 @@ version: '3.8'
 
 services:
   spring-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
     container_name: spring-app
     environment:
       SPRING_PROFILES_ACTIVE: local
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/picplz
+      SPRING_DATASOURCE_URL: jdbc:mysql://picplz-db.cveay68wqy5c.ap-northeast-2.rds.amazonaws.com:3306/picplz
       SPRING_DATASOURCE_USERNAME: picplz
       SPRING_DATASOURCE_PASSWORD: picplz
       SPRING_REDIS_HOST: redis
@@ -21,10 +18,10 @@ services:
 
   mysql-db:
     image: mysql:8.0
-    container_name: mysql-db
+    container_name: picplz-db
     environment:
       MYSQL_ROOT_PASSWORD: picplz
-      MYSQL_DATABASE: picplz
+      MYSQL_DATABASE: vlrvmfwm18!
     ports:
       - "3306:3306"
     volumes:
