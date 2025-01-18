@@ -2,6 +2,7 @@ package com.hm.picplz.domain.product.domain;
 
 import com.hm.picplz.domain.photographer.domain.Photographer;
 import com.hm.picplz.global.common.entity.BaseEntity;
+import com.hm.picplz.global.common.entity.YesNo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -44,7 +45,7 @@ public class ShootProduct extends BaseEntity {
     private int amount;
 
     @NotNull
-    private boolean editedYn;   // enum
+    private YesNo editedYn;
 
     @Positive
     @NotNull
@@ -57,7 +58,7 @@ public class ShootProduct extends BaseEntity {
     private Photographer photographer;
 
     @Builder
-    private ShootProduct(boolean editedYn, Long id, String name, String description, int shootPrice,
+    private ShootProduct(YesNo editedYn, Long id, String name, String description, int shootPrice,
         int shootDuration, int amount, int editPrice, String otherDetails,
         Photographer photographer) {
         this.editedYn = editedYn;
