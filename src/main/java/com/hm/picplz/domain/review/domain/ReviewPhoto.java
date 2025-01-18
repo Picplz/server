@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,12 +30,12 @@ public class ReviewPhoto extends BaseEntity {
 
     private String image;
 
-    private LocalDateTime uploadDate;
+    private LocalDate uploadDate;
 
     private int order;
 
     @Builder
-    public ReviewPhoto(Long id, Review review, String image, LocalDateTime uploadDate, int order) {
+    public ReviewPhoto(Long id, Review review, String image, LocalDate uploadDate, int order) {
         this.id = id;
         this.review = review;
         this.image = image;
