@@ -1,5 +1,6 @@
 package com.hm.picplz.domain.portfolio.domain;
 
+import com.hm.picplz.domain.photographer.domain.Photographer;
 import com.hm.picplz.global.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,8 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,34 +18,27 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PortfolioPhoto extends BaseEntity {
+public class Portfolio extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "portfolio_photo_id", updatable = false)
+    @Column(name = "portfolio_id", updatable = false)
     private Long id;
 
-    @NotNull
-    private String imageData;
+    @ManyToOne
+    @JoinColumn(name = "photographer_id")
+    private Photographer photographer;
 
-    @NotNull
     private String location;
 
-    @NotNull
-    private LocalDateTime uploadDate;
-
-    @ManyToOne
-    @JoinColumn(name = "portfolio_id", nullable = false)
-    private Portfolio portfolio;
+    private LocalDate uploadDate;
 
     @Builder
-    private PortfolioPhoto(Long id, String imageData, String location, LocalDateTime uploadDate,
-        Portfolio portfolio) {
+    public Portfolio(Long id, Photographer photographer, String location, LocalDate uploadDate) {
         this.id = id;
-        this.imageData = imageData;
+        this.photographer = photographer;
         this.location = location;
         this.uploadDate = uploadDate;
-        this.portfolio = portfolio;
     }
 
     // factory method
