@@ -1,6 +1,5 @@
-package com.hm.picplz.domain.product.domain;
+package com.hm.picplz.domain.photographer.domain;
 
-import com.hm.picplz.domain.photographer.domain.Photographer;
 import com.hm.picplz.global.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,8 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,28 +18,24 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductPhoto extends BaseEntity {
+public class History extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_photo_id", updatable = false)
+    @Column(name = "experience_id", updatable = false)
     private Long id;
 
-    private String imageData;
-
-    private int order;
+    @NotNull
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "photographer_id")
+    @JoinColumn(name = "photographer_id", nullable = false)
     private Photographer photographer;
 
     @Builder
-    public ProductPhoto(Long id, String imageData, int order, Photographer photographer) {
+    private History(Long id, String content, Photographer photographer) {
         this.id = id;
-        this.imageData = imageData;
-        this.order = order;
+        this.content = content;
         this.photographer = photographer;
     }
-
-    // factory method
 }

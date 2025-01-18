@@ -1,17 +1,15 @@
-package com.hm.picplz.domain.product.domain;
+package com.hm.picplz.domain.review.domain;
 
-import com.hm.picplz.domain.photographer.domain.Photographer;
 import com.hm.picplz.global.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDate;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,27 +17,30 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductPhoto extends BaseEntity {
+public class ReviewPhoto extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_photo_id", updatable = false)
+    @Column(name = "review_photo_id", updatable = false)
     private Long id;
 
-    private String imageData;
+    @ManyToOne
+    @JoinColumn(name = "review_id")
+    private Review review;
+
+    private String image;
+
+    private LocalDate uploadDate;
 
     private int order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "photographer_id")
-    private Photographer photographer;
-
     @Builder
-    public ProductPhoto(Long id, String imageData, int order, Photographer photographer) {
+    public ReviewPhoto(Long id, Review review, String image, LocalDate uploadDate, int order) {
         this.id = id;
-        this.imageData = imageData;
+        this.review = review;
+        this.image = image;
+        this.uploadDate = uploadDate;
         this.order = order;
-        this.photographer = photographer;
     }
 
     // factory method
