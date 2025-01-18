@@ -1,6 +1,7 @@
 package com.hm.picplz.domain.reservation.domain;
 
 import com.hm.picplz.global.common.entity.BaseEntity;
+import com.hm.picplz.global.common.entity.YesNo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,9 +27,17 @@ public class Reservation extends BaseEntity {
     @Column(name = "reservation_id", updatable = false)
     private Long id;
 
+    private String packageName;   // enum
+
+    private String companion;
+
     @NotNull
     @PositiveOrZero
-    private int price;
+    private int price;  // 최종 결제 금액
+
+    private int productPrice;   // 상품 금액
+
+    private int editPrice;  // 보정 금액
 
     private LocalDateTime reservationTime;
 
@@ -36,25 +45,32 @@ public class Reservation extends BaseEntity {
 
     private String camera;
 
-    private String photoType;   // enum
-
     @NotNull
     @Positive
     private String photoAmount;
 
-    private String photoPurpose;    // enum
+    private YesNo editedYn;
+
+    private String paymentType;    // enum
+
+    private String reservationNumber;   // ex) N2025194926
 
     @Builder
-    private Reservation(Long id, int price, LocalDateTime reservationTime, String place,
-        String camera,
-        String photoType, String photoAmount, String photoPurpose) {
+    public Reservation(Long id, String packageName, String companion, int price, int productPrice, int editPrice, LocalDateTime reservationTime, String place, String camera, String photoAmount, YesNo editedYn, String paymentType, String reservationNumber) {
         this.id = id;
+        this.packageName = packageName;
+        this.companion = companion;
         this.price = price;
+        this.productPrice = productPrice;
+        this.editPrice = editPrice;
         this.reservationTime = reservationTime;
         this.place = place;
         this.camera = camera;
-        this.photoType = photoType;
         this.photoAmount = photoAmount;
-        this.photoPurpose = photoPurpose;
+        this.editedYn = editedYn;
+        this.paymentType = paymentType;
+        this.reservationNumber = reservationNumber;
     }
+
+    // factory method
 }
