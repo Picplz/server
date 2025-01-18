@@ -28,17 +28,18 @@ public class ProductPhoto extends BaseEntity {
 
     private String imageData;
 
-    private int order;
+    @Column(name = "photo_order")
+    private int photoOrder;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 
     @Builder
-    public ProductPhoto(Long id, String imageData, int order, Photographer photographer) {
+    public ProductPhoto(Long id, String imageData, int photoOrder, Photographer photographer) {
         this.id = id;
         this.imageData = imageData;
-        this.order = order;
+        this.photoOrder = photoOrder;
         this.photographer = photographer;
     }
 
