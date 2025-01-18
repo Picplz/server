@@ -32,15 +32,16 @@ public class ReviewPhoto extends BaseEntity {
 
     private LocalDate uploadDate;
 
-    private int order;
+    @Column(name = "photo_order")
+    private int photoOrder;
 
     @Builder
-    public ReviewPhoto(Long id, Review review, String image, LocalDate uploadDate, int order) {
+    public ReviewPhoto(Long id, Review review, String image, LocalDate uploadDate, int photoOrder) {
         this.id = id;
         this.review = review;
         this.image = image;
         this.uploadDate = uploadDate;
-        this.order = order;
+        this.photoOrder = photoOrder;
     }
 
     // factory method
