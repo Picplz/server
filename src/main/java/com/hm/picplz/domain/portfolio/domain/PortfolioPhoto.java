@@ -26,25 +26,20 @@ public class PortfolioPhoto extends BaseEntity {
     private Long id;
 
     @NotNull
-    private String imageData;
+    private String image;
 
-    @NotNull
-    private String location;
-
-    @NotNull
-    private LocalDateTime uploadDate;
+    @Column(name = "photo_order")
+    private int photoOrder;
 
     @ManyToOne
     @JoinColumn(name = "portfolio_id", nullable = false)
     private Portfolio portfolio;
 
     @Builder
-    private PortfolioPhoto(Long id, String imageData, String location, LocalDateTime uploadDate,
-        Portfolio portfolio) {
+    private PortfolioPhoto(Long id, String image, int photoOrder, Portfolio portfolio) {
         this.id = id;
-        this.imageData = imageData;
-        this.location = location;
-        this.uploadDate = uploadDate;
+        this.image = image;
+        this.photoOrder = photoOrder;
         this.portfolio = portfolio;
     }
 
