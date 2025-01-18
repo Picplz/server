@@ -28,15 +28,11 @@ public class Customer extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private String area;
-
-    private String camera;
-
     @Builder
-    private Customer(Long id, Member member, String area, String camera) {
+    private Customer(Long id, Member member) {
         this.id = id;
         this.member = member;
-        this.area = area;
-        this.camera = camera;
     }
+
+    // factory method
 }
