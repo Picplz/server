@@ -1,5 +1,6 @@
 spring:
   profiles:
+    include: jwt
     active : dev
     group:
       local: local
