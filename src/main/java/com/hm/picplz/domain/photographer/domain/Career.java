@@ -1,5 +1,6 @@
 package com.hm.picplz.domain.photographer.domain;
 
+import com.hm.picplz.global.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,7 +11,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Hashtag {
+public class Career extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hashtag_id", updatable = false)
+    @Column(name = "career_id", updatable = false)
     private Long id;
 
     @NotNull
@@ -33,7 +33,7 @@ public class Hashtag {
     private Photographer photographer;
 
     @Builder
-    private Hashtag(Long id, String content, Photographer photographer) {
+    private Career(Long id, String content, Photographer photographer) {
         this.id = id;
         this.content = content;
         this.photographer = photographer;

@@ -4,6 +4,7 @@ import com.hm.picplz.domain.member.domain.Member;
 import com.hm.picplz.domain.product.domain.ShootProduct;
 import com.hm.picplz.domain.review.domain.Review;
 import com.hm.picplz.global.common.entity.BaseEntity;
+import com.hm.picplz.global.common.entity.YesNo;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +34,7 @@ public class Photographer extends BaseEntity {
     @Column(name = "photographer_id", updatable = false)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -51,18 +52,13 @@ public class Photographer extends BaseEntity {
     @NotNull
     private String camera;
 
-    private String workField;
-
     private String introduction;
 
     private int period; // 1년 3개월 -> 15개월
 
-    private String active;  // Y/N
+    private YesNo active;  // Y/N
 
     private String instagram;
-
-    @OneToMany(mappedBy = "photographer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<Hashtag> hashtags = new ArrayList<>();
 
     @OneToMany(mappedBy = "photographer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ShootProduct> shootProducts = new ArrayList<>();
@@ -70,21 +66,23 @@ public class Photographer extends BaseEntity {
     @OneToMany(mappedBy = "photographer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Review> reviews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "photographer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<PhotoMood> photoMoods = new ArrayList<>();
+
+    @OneToMany(mappedBy = "photographer", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Career> careers = new ArrayList<>();
+
     @Builder
-    public Photographer(Long id, Member member, String area, int minPrice, int maxPrice, String camera, String workField, String introduction, int period, String active, String instagram, List<Hashtag> hashtags, List<ShootProduct> shootProducts, List<Review> reviews) {
+    private Photographer(Long id, Member member, String area, int minPrice, int maxPrice, String camera, String introduction, int period, YesNo active, String instagram) {
         this.id = id;
         this.member = member;
         this.area = area;
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;
         this.camera = camera;
-        this.workField = workField;
         this.introduction = introduction;
         this.period = period;
         this.active = active;
         this.instagram = instagram;
-        this.hashtags = hashtags;
-        this.shootProducts = shootProducts;
-        this.reviews = reviews;
     }
 }
