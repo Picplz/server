@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class History extends BaseEntity {
+public class Career extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "experience_id", updatable = false)
+    @Column(name = "career_id", updatable = false)
     private Long id;
 
     @NotNull
@@ -33,7 +33,7 @@ public class History extends BaseEntity {
     private Photographer photographer;
 
     @Builder
-    private History(Long id, String content, Photographer photographer) {
+    private Career(Long id, String content, Photographer photographer) {
         this.id = id;
         this.content = content;
         this.photographer = photographer;

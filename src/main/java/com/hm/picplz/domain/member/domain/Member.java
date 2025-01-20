@@ -3,8 +3,10 @@ package com.hm.picplz.domain.member.domain;
 import com.hm.picplz.domain.customer.domain.Customer;
 import com.hm.picplz.domain.photographer.domain.Photographer;
 import com.hm.picplz.global.common.entity.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,6 +47,12 @@ public class Member extends BaseEntity {
 
     private String profileImage;
 
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Photographer photographer;
+
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Customer customer;
+
     @Builder
     private Member(Long id, String name, String nickname, LocalDate birth, String kakaoEmail, String profileImage) {
         this.id = id;
@@ -55,5 +63,4 @@ public class Member extends BaseEntity {
         this.profileImage = profileImage;
     }
 
-    // factory method
 }
