@@ -1,10 +1,13 @@
 package com.hm.picplz.global.config.security;
 
+import com.hm.picplz.domain.auth.OAuth2.MyAuthenticationSuccessHandler;
 import com.hm.picplz.domain.auth.jwt.JwtAccessDeniedHandler;
 import com.hm.picplz.domain.auth.jwt.JwtAuthenticationEntryPoint;
 import com.hm.picplz.domain.auth.jwt.JwtFilter;
 import com.hm.picplz.domain.auth.jwt.JwtTokenProvider;
+import com.hm.picplz.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,10 +29,14 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtTokenProvider jwtTokenProvider;
+    private final MemberRepository memberRepository;
+
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
 
     /* 권한 제외 대상 */
     private static final String[] permitAllUrl = new String[]{
-            /** Swagger Docs*/"/api-docs/**", "/swagger-ui/**"
+            /** Swagger Docs*/"/api/v1/api-docs/**", "/api/v1/swagger-ui/**", "/oauth2/**"
     };
     /* Admin 접근 권한 */
     private static final String[] permitAdminUrl = new String[]{
@@ -64,6 +71,8 @@ public class SecurityConfig {
                     request.anyRequest()
                             .authenticated();
                 })
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .successHandler(new MyAuthenticationSuccessHandler(jwtTokenProvider, memberRepository)))
                 .build();
     }
 
