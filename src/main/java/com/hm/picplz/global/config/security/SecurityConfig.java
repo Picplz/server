@@ -1,5 +1,6 @@
 package com.hm.picplz.global.config.security;
 
+import com.hm.picplz.domain.auth.OAuth2.MyAuthenticationSuccessHandler;
 import com.hm.picplz.domain.auth.jwt.JwtAccessDeniedHandler;
 import com.hm.picplz.domain.auth.jwt.JwtAuthenticationEntryPoint;
 import com.hm.picplz.domain.auth.jwt.JwtFilter;
@@ -29,14 +30,18 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
 
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
-
     /* 권한 제외 대상 */
     private static final String[] permitAllUrl = new String[]{
-            /** Swagger Docs*/"/api-docs/**", "/swagger-ui/**", "/oauth2/**"
-    };
-    /* Admin 접근 권한 */
+     "/api/v1/swagger-ui/",
+     "/api-docs/",
+     "/swagger-ui/",
+     "/swagger-resources/",
+     "/v3/api-docs/",
+     "/webjars/",
+     "/**"
+     };
+
+     /* Admin 접근 권한 */
     private static final String[] permitAdminUrl = new String[]{
     };
 
