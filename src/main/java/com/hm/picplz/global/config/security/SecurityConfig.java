@@ -34,7 +34,7 @@ public class SecurityConfig {
 
     /* 권한 제외 대상 */
     private static final String[] permitAllUrl = new String[]{
-            /** Swagger Docs*/"/api/v1/api-docs/**", "/api/v1/swagger-ui/**", "/oauth2/**"
+            /** Swagger Docs*/"/api-docs/**", "/swagger-ui/**", "/oauth2/**"
     };
     /* Admin 접근 권한 */
     private static final String[] permitAdminUrl = new String[]{
