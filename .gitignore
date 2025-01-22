@@ -31,7 +31,7 @@ build/
 !**/src/main/**
 !**/src/test/**
 /src/main/resources/application*
-.docker-compose.yml
+docker-compose.yml
 
 ### STS ###
 .apt_generated
