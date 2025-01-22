@@ -68,8 +68,9 @@ jobs:
         mkdir -p ./src/main/resources
         cd ./src/main/resources
         touch ./application.yml
-        touch ./application-common.yml
-        touch ./application-prod.yml
+        touch ./application-jwt.yml
+        touch ./application-db.yml
+        touch ./application-oauth.yml
         echo "${{ secrets.APPLICATION }}" > ./application.yml
         echo "${{ secrets.JWT }}" > ./application-jwt.yml
         echo "${{ secrets.DB }}" > ./application-db.yml
