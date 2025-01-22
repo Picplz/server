@@ -1,0 +1,3 @@
+jwt:
+  secret: Uud7GcDEEIEVR8yQSDZF2mNropBEDiKh3YlaP2aiwkljaks3Pkiakm2iakmsIskqJISK32SKWMKLAIJHQKMNG3IKQ2IAKS4IJAKS2IJFLA7IQKJAMN2a
+  token-validity-in-seconds: 30000
