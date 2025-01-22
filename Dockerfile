@@ -30,9 +30,6 @@ WORKDIR /picplz
 # Copy the built JAR file from the builder stage
 COPY --from=builder /app/build/libs/*.jar app.jar
 
-# Set the active Spring profile to 'local'
-ENV SPRING_PROFILES_ACTIVE=local
-
 # Expose port 8000 to the outside world
 EXPOSE 8080
 
