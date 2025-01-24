@@ -2,6 +2,7 @@ package com.hm.picplz.domain.member.service;
 
 import com.hm.picplz.domain.member.MemberRepository;
 import com.hm.picplz.domain.member.domain.Member;
+import com.hm.picplz.domain.member.dto.request.CreateMemberRequest;
 import com.hm.picplz.domain.member.dto.request.UpdateMemberInfoRequest;
 import com.hm.picplz.domain.member.dto.request.UpdateMemberLocationRequest;
 import com.hm.picplz.domain.member.dto.response.MemberInfoResponse;
@@ -72,5 +73,21 @@ public class MemberService {
         return photographerHelper.getPhotographerCardByMemberGeoInfo(results);
     }
 
+    @Transactional
+    public MemberInfoResponse createMemberTest(CreateMemberRequest createMemberRequest) {
+        Member member = Member.builder()
+                .birth(createMemberRequest.getBirth())
+                .name(createMemberRequest.getName())
+                .nickname(createMemberRequest.getNickname())
+                .role(createMemberRequest.getRole())
+                .kakaoEmail(createMemberRequest.getKakaoEmail())
+                .profileImage(createMemberRequest.getProfileImage())
+                .attributeCode(null)
+                .provider(null)
+                .build();
 
+        memberRepository.save(member);
+
+        return new MemberInfoResponse(member);
+    }
 }

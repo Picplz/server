@@ -1,5 +1,6 @@
 package com.hm.picplz.domain.member.controller;
 
+import com.hm.picplz.domain.member.dto.request.CreateMemberRequest;
 import com.hm.picplz.domain.member.dto.request.UpdateMemberInfoRequest;
 import com.hm.picplz.domain.member.dto.request.UpdateMemberLocationRequest;
 import com.hm.picplz.domain.member.dto.response.MemberInfoResponse;
@@ -28,6 +29,12 @@ public class MemberController {
     @PatchMapping(value = "/info")
     public ResponseEntity<MemberInfoResponse> updateMemberInfo(@RequestBody UpdateMemberInfoRequest updateMemberInfoRequest) {
         return new ResponseEntity<>(memberService.updateMemberInfo(updateMemberInfoRequest), HttpStatus.OK);
+    }
+
+    @Operation(summary = "카카오 로그인 거치지 않는 테스트용 회원 생성 api")
+    @PostMapping(value = "/test")
+    public ResponseEntity<MemberInfoResponse> createMemberTest(@RequestBody CreateMemberRequest createMemberRequest) {
+        return new ResponseEntity<>(memberService.createMemberTest(createMemberRequest), HttpStatus.OK);
     }
 
     @Operation(summary = "위치 업데이트")

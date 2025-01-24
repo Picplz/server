@@ -32,12 +32,13 @@ public class SecurityConfig {
 
     /* 권한 제외 대상 */
     private static final String[] permitAllUrl = new String[]{
-         "/swagger-ui/**",
-         "/api-docs/",
-         "/swagger-ui/",
-         "/swagger-resources/",
-         "/v3/api-docs/",
-         "/webjars/",
+            "/swagger-ui/**",
+            "/api-docs/",
+            "/swagger-ui/",
+            "/swagger-resources/",
+            "/v3/api-docs/",
+            "/webjars/",
+            "/members/test"
      };
 
      /* Admin 접근 권한 */
