@@ -26,32 +26,24 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
         DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
-        Object memberNo = defaultOAuth2User.getAttributes().get("memberNo");
+        Object memberId = defaultOAuth2User.getAttributes().get("memberNo");
 
         if (defaultOAuth2User == null) {
             throw new NullPointerException("null cannot be cast to non-null type org.springframework.security.oauth2.core.user.OAuth2User");
         } else {
             try {
                 if (authentication.isAuthenticated()) {
-                    Member member = memberRepository.findById((Long) memberNo)
-                            .orElseThrow(() -> new IllegalArgumentException("해당 사용자 No가 없습니다. No : " + memberNo));
+                    Member member = memberRepository.findById((Long) memberId)
+                            .orElseThrow(() -> new IllegalArgumentException("해당 사용자 No가 없습니다. No : " + memberId));
                 }
 
                 JwtTokenResponseDto tokenDto = jwtTokenProvider.generateTokenDto(authentication, "SOCIAL");
-
-//                // 4. RefreshToken 저장
-//                RefreshToken refreshToken = RefreshToken.builder()
-//                        .key(String.valueOf(memberNo))
-//                        .value(tokenDto.getRefreshToken())
-//                        .build();
-//
-//                refreshTokenRepository.save(refreshToken);
 
                 DriverManager.println("SuccessHandler oAuth2User: " + defaultOAuth2User);
                 response.sendRedirect(UriComponentsBuilder.fromUriString("http://localhost:3000")
                         .queryParam("bearer", tokenDto.getGrantType())
                         .queryParam("accessToken", tokenDto.getAccessToken())
-//                        .queryParam("refreshToken", tokenDto.getRefreshToken())
+                        .queryParam("refreshToken", tokenDto.getRefreshToken())
                         .queryParam("expires", tokenDto.getAccessTokenExpires())
                         .queryParam("expiresDate", tokenDto.getAccessTokenExpiresDate())
                         .build().encode(StandardCharsets.UTF_8)
