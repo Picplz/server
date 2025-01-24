@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class UpdateMemberRequest {
+public class UpdateMemberLocationRequest {
 
     @Schema(defaultValue = "1", description = "회원 아이디")
     @NotNull(message = "회원 아이디를 입력해주세요")
