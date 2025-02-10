@@ -21,6 +21,7 @@ public enum OAuth2Attributes {
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
         OAuth2RequestDto oAuth2RequestDto = new OAuth2RequestDto();
 
+        oAuth2RequestDto.setAttributeCode(String.valueOf(attributes.get("id")));
         oAuth2RequestDto.setName((String) kakaoProfile.get("nickname"));
 
         return oAuth2RequestDto;

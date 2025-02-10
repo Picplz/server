@@ -29,18 +29,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuth2UserService<OAuth2UserRequest, OAuth2User> service = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = service.loadUser(userRequest); // OAuth2 정보를 가져옴
-        log.info("oAuth2User 정보 : " + oAuth2User.toString());
 
         Map<String, Object> originAttributes = oAuth2User.getAttributes(); // OAuth2User의 attribute
-        log.info("OAuth2User의 attribute 정보 : " + originAttributes.toString());
 
         // OAuth2 서비스 ID(google, kakao, naver)
         String registrationId = userRequest.getClientRegistration().getRegistrationId(); // 소셜 정보를 가져옴
-        log.info("OAuth2 서비스 ID : " + registrationId);
 
         OAuth2RequestDto oAuth2RequestDto = OAuth2Attributes.extract(registrationId, originAttributes);
         oAuth2RequestDto.setProvider(registrationId);
-        log.info("OAuth2RequestDto : " + oAuth2RequestDto.toString());
 
         Member member = saveOrUpdate(oAuth2RequestDto);
 
@@ -49,8 +45,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .getUserInfoEndpoint().getUserNameAttributeName(); // 해당 소셜 서비스에서 유니크한 id값을 전달
 
         Map<String, Object> customAttribute = customAttribute(originAttributes, userNameAttributeName, oAuth2RequestDto, member.getId(), registrationId);
-
-        log.info("customAttribute : " + customAttribute.toString());
 
         return new DefaultOAuth2User(
                 Collections.singleton(
