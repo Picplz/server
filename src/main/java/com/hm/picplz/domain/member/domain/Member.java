@@ -1,22 +1,11 @@
 package com.hm.picplz.domain.member.domain;
 
-import com.hm.picplz.global.common.entity.BaseEntity;
 import com.hm.picplz.domain.customer.domain.Customer;
 import com.hm.picplz.domain.photographer.domain.Photographer;
-import jakarta.persistence.*;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import com.hm.picplz.global.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -78,6 +67,14 @@ public class Member extends BaseEntity {
 
     public String getRoleKey() {
         return this.role.getKey();
+    }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public Member oAuthInfoUpdate(String memberName, String memberProvider) {

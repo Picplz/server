@@ -5,6 +5,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,10 +18,13 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenProvider implements InitializingBean {
+
+    private final RedisTemplate<String, String> redisTemplate;
     // JWT 생성 및 검증을 위한 키
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
@@ -30,11 +34,12 @@ public class JwtTokenProvider implements InitializingBean {
     private Key key;
 
     public JwtTokenProvider(
-            @Value("${jwt.secret}") String secret,
+            RedisTemplate<String, String> redisTemplate, @Value("${jwt.secret}") String secret,
             @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
+        this.redisTemplate = redisTemplate;
         this.secret = secret;
         this.accessTokenValidityInMilliseconds = tokenValidityInSeconds * 30; // 60,000ms : 1m(0.001d), 60000 * 30 = 30m
-        this.refreshTokenValidityInMilliseconds = tokenValidityInSeconds * 60 * 24 * 2; // 60,000ms : 1m(0.001d), 60000 * 60 * 24 * 2 = 2d
+        this.refreshTokenValidityInMilliseconds = tokenValidityInSeconds * 60; // 60,000ms : 1m(0.001d), 60000 * 60 * 24 * 2 = 2d
     }
 
     // 빈이 생성되고 주입을 받은 후에 secret값을 Base64 Decode해서 key 변수에 할당하기 위해
@@ -63,16 +68,23 @@ public class JwtTokenProvider implements InitializingBean {
         String accessToken = Jwts.builder()
                 .setSubject(String.valueOf(memberNo))
                 .claim(AUTHORITIES_KEY, authorities)
-                .signWith(key, SignatureAlgorithm.HS512)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(accessExprTime)
                 .compact();
 
         String refreshToken = Jwts.builder()
                 .setSubject(String.valueOf(memberNo))
                 .claim(AUTHORITIES_KEY, authorities)
-                .signWith(key, SignatureAlgorithm.HS512)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(refreshExprTime)
                 .compact();
+
+        redisTemplate.opsForValue().set(
+                "token : " + String.valueOf(memberNo),
+                refreshToken,
+                refreshTokenValidityInMilliseconds,
+                TimeUnit.MILLISECONDS
+        );
 
         return JwtTokenResponseDto.builder()
                 .grantType(BEARER_TYPE)

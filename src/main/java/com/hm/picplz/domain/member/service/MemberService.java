@@ -1,18 +1,24 @@
 package com.hm.picplz.domain.member.service;
 
-import com.hm.picplz.domain.member.dto.request.UpdateMemberRequest;
+import com.hm.picplz.domain.member.MemberRepository;
+import com.hm.picplz.domain.member.domain.Member;
+import com.hm.picplz.domain.member.dto.request.CreateMemberRequest;
+import com.hm.picplz.domain.member.dto.request.UpdateMemberInfoRequest;
+import com.hm.picplz.domain.member.dto.request.UpdateMemberLocationRequest;
+import com.hm.picplz.domain.member.dto.response.MemberInfoResponse;
 import com.hm.picplz.domain.photographer.dto.PhotographerDto;
 import com.hm.picplz.domain.photographer.helper.PhotographerHelper;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.geo.Circle;
 import org.springframework.data.geo.GeoResult;
-import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.geo.Point;
+import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.connection.RedisGeoCommands.GeoLocation;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
@@ -21,10 +27,22 @@ public class MemberService {
 
     private final String GEO_KEY = "members:locations";
 
+    private final MemberRepository memberRepository;
     private final PhotographerHelper photographerHelper;
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public void updateLocation(UpdateMemberRequest request) {
+    @Transactional
+    public MemberInfoResponse updateMemberInfo(UpdateMemberInfoRequest updateMemberInfoRequest) {
+        Member member = memberRepository.findById(updateMemberInfoRequest.getId())
+                .orElseThrow(IllegalArgumentException::new);
+
+        member.updateNickname(updateMemberInfoRequest.getNickname());
+        member.updateProfileImage(updateMemberInfoRequest.getProfileImage());
+
+        return new MemberInfoResponse(member);
+    }
+
+    public void updateLocation(UpdateMemberLocationRequest request) {
         redisTemplate.opsForGeo().add(GEO_KEY, new RedisGeoCommands.GeoLocation<>(
                 request.getMemberId(), new Point(request.getLongitude(), request.getLatitude())));
 
@@ -53,5 +71,23 @@ public class MemberService {
                 .getContent();
 
         return photographerHelper.getPhotographerCardByMemberGeoInfo(results);
+    }
+
+    @Transactional
+    public MemberInfoResponse createMemberTest(CreateMemberRequest createMemberRequest) {
+        Member member = Member.builder()
+                .birth(createMemberRequest.getBirth())
+                .name(createMemberRequest.getName())
+                .nickname(createMemberRequest.getNickname())
+                .role(createMemberRequest.getRole())
+                .kakaoEmail(createMemberRequest.getKakaoEmail())
+                .profileImage(createMemberRequest.getProfileImage())
+                .attributeCode(null)
+                .provider(null)
+                .build();
+
+        memberRepository.save(member);
+
+        return new MemberInfoResponse(member);
     }
 }
