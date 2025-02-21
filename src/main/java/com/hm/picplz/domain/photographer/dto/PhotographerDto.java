@@ -3,12 +3,13 @@ package com.hm.picplz.domain.photographer.dto;
 import com.hm.picplz.domain.photographer.domain.PhotoMood;
 import com.hm.picplz.domain.photographer.domain.Photographer;
 import com.hm.picplz.global.common.entity.YesNo;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -61,7 +62,6 @@ public class PhotographerDto {
             detail.nickname = photographer.getMember().getNickname();
             detail.profileImage = photographer.getMember().getProfileImage();
             detail.area = photographer.getArea();
-            detail.introduction = photographer.getIntroduction();
             detail.active = photographer.getActive();
             detail.instagram = photographer.getInstagram();
             detail.photoMoods = photographer.getPhotoMoods().stream()
