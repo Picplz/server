@@ -10,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Component;
 
@@ -62,25 +61,25 @@ public class JwtTokenProvider implements InitializingBean {
         Date refreshExprTime = new Date(now + this.refreshTokenValidityInMilliseconds);
 
         DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
-        Object memberNo = defaultOAuth2User.getAttributes().get("memberNo");
+        Object memberId = defaultOAuth2User.getAttributes().get("memberNo");
         Object provider = defaultOAuth2User.getAttributes().get("provider");
 
         String accessToken = Jwts.builder()
-                .setSubject(String.valueOf(memberNo))
+                .setSubject(String.valueOf(memberId))
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(accessExprTime)
                 .compact();
 
         String refreshToken = Jwts.builder()
-                .setSubject(String.valueOf(memberNo))
+                .setSubject(String.valueOf(memberId))
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(refreshExprTime)
                 .compact();
 
         redisTemplate.opsForValue().set(
-                "token : " + String.valueOf(memberNo),
+                "token : " + String.valueOf(memberId),
                 refreshToken,
                 refreshTokenValidityInMilliseconds,
                 TimeUnit.MILLISECONDS
@@ -108,9 +107,9 @@ public class JwtTokenProvider implements InitializingBean {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        Long memberId = Long.valueOf(claims.getSubject());
 
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        return new UsernamePasswordAuthenticationToken(memberId, token, authorities);
     }
 
     // 토큰의 유효성 검증을 수행
